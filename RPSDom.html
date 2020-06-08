@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock Paper Scissors DOM</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+
+<center>
+<h1> Welcome to Rock Paper Scissors</h1>    
+first to reach five games wins!
+
+
+<div>
+    <p id="NewGameSpace">
+    <br>
+    <br>
+</div>
+
+<h2>Choose one:</h2>
+<br>
+    <div id="container">
+    <button id="Rock">Rock</button> 
+    <button id="Paper">Paper</button> 
+    <button id="Scissors">Scissors</button> 
+</div>
+
+<div id="player">
+    <br>
+    <br>
+    You chose
+    <p id="youChoose">
+</div>
+
+<div id="computer">
+    <center>
+    <br>
+    <br>
+    Computer chooses
+    <p id="computerChoice">
+</div>
+
+<div id="result">
+    <br>
+    <br>
+    And the result is ...
+    <p id="resultLine">
+    <br>
+    <br>
+</div>
+
+<table style="width:25%">
+        <tr>
+          <th>Player Score</th>
+          <th>Computer Score</th> 
+        </tr>
+        <tr>
+          <center><td id="playerScoreboard"> </td></center>
+          <center></center><td id="computerScoreboard"> </td><center>
+        </tr>
+        </tr>
+      </table>
+</center>
+<script>
+
+let playerScore = 0
+let computerScore = 0
+
+const computerChoice = document.querySelector("#computerChoice");
+const youChoose = document.querySelector('#youChoose');
+const resultLine = document.querySelector('#resultLine');
+const playerScoreboard = document.querySelector('#playerScoreboard');
+playerScoreboard.style.textAlign = "center";
+const computerScoreboard = document.querySelector('#computerScoreboard');
+computerScoreboard.style.textAlign = "center";
+
+const cont = document.querySelector('#NewGameSpace');
+const continueButton = document.createElement('button'); 
+continueButton.textContent = 'New Game' ;
+
+const Rock = document.querySelector('#Rock');
+const Paper = document.querySelector('#Paper');
+const Scissors = document.querySelector('#Scissors');
+
+Rock.addEventListener('click', choiceFunction);
+Paper.addEventListener('click', choiceFunction);
+Scissors.addEventListener('click', choiceFunction);
+
+function choiceFunction(e) {
+  playerSelection = e.target.id;
+  playRound();}
+
+function computerPlay() { 
+    const compnum = Math.round(Math.random() * (2 - 0) + 0);
+    if (compnum == 0) {return 'Rock';}
+    else if (compnum == 1) {return 'Paper';}
+    else {return 'Scissors';}
+}
+
+function playRound() {
+
+const computerSelection = computerPlay();
+computerChoice.textContent = computerSelection;
+youChoose.textContent = playerSelection;
+
+if (playerSelection === computerSelection) 
+    {resultLine.textContent =("Tie this round");}
+else if (playerSelection === "Rock" && computerSelection === "Scissors")
+    {(playerScore += 1);
+        resultLine.textContent =
+        ("You win this round! " + playerSelection + " beats " + computerSelection +"."); }
+else if (playerSelection === "Scissors" && computerSelection === "Rock")
+    {(computerScore += 1);
+        resultLine.textContent =
+        ("You lose this round! " + computerSelection + " beats " + playerSelection + "."); }
+else if (playerSelection.length > computerSelection.length)
+    {(playerScore += 1);
+        resultLine.textContent =
+        ("You win this round! " + playerSelection + " beats " + computerSelection + "."); }
+else if (computerSelection.length > playerSelection.length) 
+    {(computerScore += 1);
+        resultLine.textContent =
+        ("You lose this round! " + computerSelection + " beats " + playerSelection + "."); };
+
+playerScoreboard.textContent = playerScore;
+computerScoreboard.textContent = computerScore;
+
+if (playerScore == 5) {alert("You win! \r\nGame Over. \r\nPress New Game to Play Again.");}
+else if (computerScore == 5) {alert("You lose! \r\nGame Over. \r\nPress New Game to Play Again.");}
+
+if (playerScore >= 5 || computerScore >= 5)
+{
+
+Rock.removeEventListener('click', choiceFunction);
+Rock.addEventListener('click', endPlay);
+Paper.removeEventListener('click', choiceFunction);
+Paper.addEventListener('click', endPlay);
+Scissors.removeEventListener('click', choiceFunction);
+Scissors.addEventListener('click', endPlay);
+
+NewGameSpace.appendChild(continueButton);
+NewGameSpace.addEventListener('click', renewBoard)}
+};
+
+
+function renewBoard() {
+    playerScore = 0
+    computerScore = 0
+    playerScoreboard.textContent = playerScore;
+    computerScoreboard.textContent = computerScore;
+    computerChoice.textContent = " ";
+    youChoose.textContent = " ";
+    resultLine.textContent = " ";
+    Rock.removeEventListener('click', endPlay);
+    Rock.addEventListener('click', choiceFunction);
+    Paper.removeEventListener('click', endPlay);
+    Paper.addEventListener('click', choiceFunction);
+    Scissors.removeEventListener('click', endPlay);
+    Scissors.addEventListener('click', choiceFunction);
+cont.removeChild(continueButton);
+}
+
+
+function endPlay() {
+    alert("You can't play further. Push the \'New Game\' button.")
+    console.log("game ended")
+};
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+

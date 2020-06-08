@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock Paper Scissors DOM</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+
+<center>
+<h1> Welcome to Rock Paper Scissors</h1>    
+first to reach five games wins!
+
+
+<div>
+    <p id="cont">
+    <br>
+    <br>
+</div>
+
+<h2>Choose one:</h2>
+<br>
+    <div id="container">
+    <button id="Rock">Rock</button> 
+    <button id="Paper">Paper</button> 
+    <button id="Scissors">Scissors</button> 
+</div>
+
+<div>
+    <p id="togglediv">
+    Experiment: ToggleDiv
+    <br>
+</div>
+
+<div id="player">
+    <br>
+    <br>
+    You chose
+    <p id="uchoose">
+</div>
+
+<div id="player">
+    <br>
+    <br>
+    You chose
+    <p id="uchoose">
+</div>
+
+<div id="computer">
+    <center>
+    <br>
+    <br>
+    Computer chooses
+    <p id="cchoose">
+</div>
+
+<div id="result">
+    <br>
+    <br>
+    And the result is ...
+    <p id="resulto">
+    <br>
+    <br>
+</div>
+
+<table style="width:25%">
+        <tr>
+          <th>Player Score</th>
+          <th>Computer Score</th> 
+        </tr>
+        <tr>
+          <center><td id="pscore"> </td></center>
+          <center></center><td id="cscore"> </td><center>
+        </tr>
+        </tr>
+      </table>
+</center>
+<script>
+
+let playerScore = 0
+let computerScore = 0
+
+function toggler() {
+  var x = document.getElementById("togglediv");
+  if (playerScore >= 5 || computerScore >= 5 ) {
+    x.style.display = "none";} 
+else if (playerScore < 5 && computerScore < 5 )
+    {x.style.display = "block"};
+  }
+
+const cchoose = document.querySelector("#cchoose");
+const uchoose = document.querySelector('#uchoose');
+const resulto = document.querySelector('#resulto');
+const pscore = document.querySelector('#pscore');
+pscore.style.textAlign = "center";
+const cscore = document.querySelector('#cscore');
+cscore.style.textAlign = "center";
+
+const cont = document.querySelector('#cont');
+const contbut = document.createElement('button'); 
+contbut.textContent = 'New Game' ;
+
+const Rock = document.querySelector('#Rock');
+const Paper = document.querySelector('#Paper');
+const Scissors = document.querySelector('#Scissors');
+
+Rock.addEventListener('click', choiceFunction);
+Paper.addEventListener('click', choiceFunction);
+Scissors.addEventListener('click', choiceFunction);
+
+function choiceFunction(e) {
+  playerSelection = e.target.id;
+  playRound();}
+
+function computerPlay() { 
+    const compnum = Math.round(Math.random() * (2 - 0) + 0);
+    if (compnum == 0) {return 'Rock';}
+    else if (compnum == 1) {return 'Paper';}
+    else {return 'Scissors';}
+}
+
+function playRound() {
+
+const computerSelection = computerPlay();
+cchoose.textContent = computerSelection;
+uchoose.textContent = playerSelection;
+
+if (playerSelection === computerSelection) 
+    {resulto.textContent =("Tie this round");}
+else if (playerSelection === "Rock" && computerSelection === "Scissors")
+    {(playerScore += 1);
+        resulto.textContent =
+        ("You win this round! " + playerSelection + " beats " + computerSelection +"."); }
+else if (playerSelection === "Scissors" && computerSelection === "Rock")
+    {(computerScore += 1);
+        resulto.textContent =
+        ("You lose this round! " + computerSelection + " beats " + playerSelection + "."); }
+else if (playerSelection.length > computerSelection.length)
+    {(playerScore += 1);
+        resulto.textContent =
+        ("You win this round! " + playerSelection + " beats " + computerSelection + "."); }
+else if (computerSelection.length > playerSelection.length) 
+    {(computerScore += 1);
+        resulto.textContent =
+        ("You lose this round! " + computerSelection + " beats " + playerSelection + "."); };
+
+pscore.textContent = playerScore;
+cscore.textContent = computerScore;
+
+if (playerScore == 5) {alert("You win! \r\nGame Over. \r\nPress New Game to Play Again.");}
+else if (computerScore == 5) {alert("You lose! \r\nGame Over. \r\nPress New Game to Play Again.");}
+
+toggler()
+
+if (playerScore >= 5 || computerScore >= 5)
+{
+
+Rock.removeEventListener('click', choiceFunction);
+Rock.addEventListener('click', endPlay);
+Paper.removeEventListener('click', choiceFunction);
+Paper.addEventListener('click', endPlay);
+Scissors.removeEventListener('click', choiceFunction);
+Scissors.addEventListener('click', endPlay);
+
+cont.appendChild(contbut);
+cont.addEventListener('click', function() {
+    playerScore = 0
+    computerScore = 0
+    pscore.textContent = playerScore;
+    cscore.textContent = computerScore;
+    cchoose.textContent = " ";
+    uchoose.textContent = " ";
+    resulto.textContent = " ";
+    Rock.removeEventListener('click', endPlay);
+    Rock.addEventListener('click', choiceFunction);
+    Paper.removeEventListener('click', endPlay);
+    Paper.addEventListener('click', choiceFunction);
+    Scissors.removeEventListener('click', endPlay);
+    Scissors.addEventListener('click', choiceFunction);
+cont.removeChild(contbut);
+toggler();
+} )}
+};
+
+function endPlay() {
+    alert("You can't play further. Push the \'New Game\' button.")
+    console.log("game ended")
+};
+
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
